@@ -35,16 +35,22 @@ EXCLUDE_FILE[0]="configuration.php"
 LOGS="/var/log/www-sync/"
 ## date format ##
 NOW=$(date +"%F")
-NOWT=$(date +"%T")
+NOWT=$(date +"%H%M")
 
 
 #
 # @method logging script activity 
 #
 
-#function logging() {
-#    echo $NOWT
-#}
+function logging() {
+    # Still on development
+    if [ -d $LOGS ]; then
+        cat /dev/null >  $LOGS"log-"$NOW-$NOWT".log"
+    else
+        mkdir -p $LOGS
+        logging
+    fi
+}
 
 #
 # @method to sync directory and file
