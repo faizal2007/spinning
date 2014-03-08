@@ -11,6 +11,7 @@ This script is use to sync web content or directory and data such as Server fold
 * root acces (sudo)
 
 **How to use** 
+
 1. sudo su
 2. git clone https://gist.github.com/9420620.git ./sys-sync or copy script inside www-sync.sh file
 3. If using git cd ./sys-sync.sh
