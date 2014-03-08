@@ -1,16 +1,16 @@
-## System Sync Toolkit  
+# System Sync Toolkit  
 This script is use to sync web content or directory and data such as Server folder and MySQL Database  
 
-**File**  
+## File  
 * www-sync (document root sync)
 * db-sync (db sycn) - will be updated later  
 
-**Requirement** 
+## Requirement 
 * ssh 
 * rsync
 * root acces (sudo)
 
-**How to use** 
+## How to
 ### www-sync
 
 1. sudo su
