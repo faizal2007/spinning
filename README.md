@@ -2,8 +2,8 @@
 This script is use to sync web content or directory and data such as Server folder and MySQL Database  
 * **[FILE](#file "FILE")**
 * **[REQUIREMENT](#requirement "REQUIREMENT")**
-* **[HOW TO](#requirement "HOW TO")**
-  * **[WWW-SYNC](#requirement "WWW-SYNC")**
+* **[HOW TO](#how-to "HOW TO")**
+  * **[WWW-SYNC](#www-sync "WWW-SYNC")**
 
 ## File  
 * www-sync (document root sync)
