@@ -4,11 +4,11 @@ This script is use to sync web content or directory and data such as Server fold
 * **[Requirement](#requirement "Requirement")**
 * **[How To](#how-to "How T")**
   * **[www-sync](#www-sync "www-sync")**
-  * **[db-sync](#www-sync "db-sync")**
+  * **[db-sync](#db-sync "db-sync")**
 
 ## File  
 * www-sync (document root sync)
-* db-sync (db sycn) - will be updated later  
+* db-sync (db sync) - will be updated later  
 
 ## Requirement 
 * ssh 
