@@ -60,10 +60,12 @@ function sync_db() {
     # only 3 option available
     case "$1" in
             1)
-            echo "All"
+            OPT="--events  --skip-add-locks --databases"
+            DB_LIST=$(mysql --defaults-extra-file=$RCONF -NBe 'SHOW SCHEMAS' | grep -wv 'information_schema\|performance_schema')
             ;;
             2)
-            echo "Without default db"
+            OPT="--databases"
+            DB_LIST=$(mysql --defaults-extra-file=$RCONF -NBe 'SHOW SCHEMAS' | grep -wv 'mysql\|information_schema\|performance_schema')
             ;;
             *)
             echo $"Usage : $0 {1|2|3}. Initialize var SYNC with correct value." 
@@ -71,8 +73,12 @@ function sync_db() {
    esac
    
    # dump mysql from source to destination server
-   mysqldump --defaults-extra-file=$RCONF test > "$TMP/test.sql"
-   mysql --defaults-extra-file=$RCONF < "$TMP/test.sql"
+   mysqldump --defaults-extra-file=$RCONF $OPT $DB_LIST > "$TMP/db.sql"
+   mysql --defaults-extra-file=$LCONF < "$TMP/db.sql"
+   
+   # fix mysql when all database dump
+   [[ $1 -eq 1 ]] && mysql_upgrade --defaults-extra-file=$LCONF --force 
 }
 
-sync_db 1
+
+sync_db $SYNC
