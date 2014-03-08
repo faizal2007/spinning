@@ -41,6 +41,7 @@ user     = user
 password = test
 socket   = /var/run/mysqld/mysqld.sock
 
+
 *db-sync-local.conf*  
 ```text  
 [client]
