@@ -1,9 +1,10 @@
 # System Sync Toolkit  
 This script is use to sync web content or directory and data such as Server folder and MySQL Database  
-* **[FILE](#file "FILE")**
-* **[REQUIREMENT](#requirement "REQUIREMENT")**
-* **[HOW TO](#how-to "HOW TO")**
-  * **[WWW-SYNC](#www-sync "WWW-SYNC")**
+* **[File](#file "File")**
+* **[Requirement](#requirement "Requirement")**
+* **[How To](#how-to "How T")**
+  * **[www-sync](#www-sync "www-sync")**
+  * **[db-sync](#www-sync "db-sync")**
 
 ## File  
 * www-sync (document root sync)
@@ -14,7 +15,7 @@ This script is use to sync web content or directory and data such as Server fold
 * rsync
 * root acces (sudo)
 
-## How to
+## How To
 ### www-sync
 
 1. sudo su
@@ -23,8 +24,8 @@ This script is use to sync web content or directory and data such as Server fold
 4. chmod +x ./www-sync.sh (same for copy script)
 5. ./www-sync.sh
 ```
-NOTE: Before running the script, make sure all the variable setting inside www-sync.sh 
-meet with your requirement.
+NOTE: 
+Before running the script, make sure all the variable setting inside www-sync.sh meet with your requirement.
 ```
 
 ### db-sync
