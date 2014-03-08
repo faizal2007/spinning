@@ -8,7 +8,7 @@ This script is use to sync web content or directory and data such as Server fold
 
 ## File  
 * www-sync (document root sync)
-* db-sync (db sync) - will be updated later  
+* db-sync (db sync) - Still in progress .. 
 
 ## Requirement 
 * ssh 
