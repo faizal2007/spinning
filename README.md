@@ -18,5 +18,6 @@ This script is use to sync web content or directory and data such as Server fold
 4. chmod +x ./www-sync.sh (same for copy script)
 5. ./www-sync.sh
 
+Log file will be create at 
 
 

@@ -45,6 +45,13 @@ LOGS="/var/log/www-sync/"
 NOW=$(date +"%F")
 NOWT=$(date +"%H%M-%S")
 
+
+###
+#
+# Core Script
+#
+###
+
 #
 # @method to record error
 #
