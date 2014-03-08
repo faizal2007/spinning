@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#
+# Script to sync Directory
+#
+
 # Redirect file descriptor #3 to standard output (used in recordfailure)
 exec 3>&1
 
