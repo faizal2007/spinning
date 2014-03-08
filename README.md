@@ -29,8 +29,8 @@ meet with your requirement.
 2. git clone https://gist.github.com/9420620.git ./sys-sync or copy script inside www-sync.sh file
 3. If using git cd ./sys-sync
 4. Create config file
-  1. /etc/mysql/db-sync.conf - server config for server where want to sync/download a data (source)
-  2. /et/mysql/db-sync-local.conf - local server config (local)
+  * /etc/mysql/db-sync.conf - server config for server where want to sync/download a data (source)
+  * /et/mysql/db-sync-local.conf - local server config (local)
 5. chmod +x ./db-sync.sh (same for copy script)
 6. ./db-sync.sh
 
