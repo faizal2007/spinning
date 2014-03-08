@@ -86,7 +86,7 @@ function record_error() {
     fi
     else
         mkdir -p $LOGS
-        logging
+        record_error
     fi
 
     if [ ${#failures[@]} -ne 0 ]; then
