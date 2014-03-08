@@ -2,7 +2,7 @@
 This script is use to sync web content or directory and data such as Server folder and MySQL Database  
 * **[File](#file "File")**
 * **[Requirement](#requirement "Requirement")**
-* **[How To](#how-to "How T")**
+* **[How To](#how-to "How To")**
   * **[www-sync](#www-sync "www-sync")**
   * **[db-sync](#db-sync "db-sync")**
 
