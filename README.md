@@ -25,7 +25,8 @@ This script is use to sync web content or directory and data such as Server fold
 5. ./www-sync.sh
 ```
 NOTE: 
-Before running the script, make sure all the variable setting inside www-sync.sh meet with your requirement.
+Before running the script, make sure all the variable setting inside www-sync.sh meet with your 
+requirement.
 ```
 
 ### db-sync
