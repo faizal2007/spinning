@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Redirect file descriptor #3 to standard output (used in recordfailure)
+exec 3>&1
+
+# create an array for holding failures
+declare -a failures
+
 #
 # rsync option
 # Refer man rsync
@@ -37,20 +43,50 @@ EXCLUDE_FILE[0]="configuration.php"
 LOGS="/var/log/www-sync/"
 ## date format ##
 NOW=$(date +"%F")
-NOWT=$(date +"%H%M")
-
+NOWT=$(date +"%H%M-%S")
 
 #
-# @method logging script activity 
+# @method to record error
 #
 
-function logging() {
-    # Still on development
+function record_error() {
+    local error retval
+
     if [ -d $LOGS ]; then
-        cat /dev/null >  $LOGS"log-"$NOW-$NOWT".log"
+        # Run the command and store error messages (output to the standard error
+        # stream in $error, but send regular output to file descriptor 3 which
+        # redirects to standard output
+        error="$("$@" 2>&1 /dev/null)"
+        retval=$?
+        # if the command failed (returned a non-zero exit code)
+        if [ $retval -gt 0 ]; then
+            if [ -z "$error" ]; then
+                # create an error message if there was none
+                error="Command failed with exit code $retval"
+            fi
+            # uncomment if you want the command in the error message
+            #error="Command $* failed: $error"
+
+            # append the error to $failures, ${#failures[@]} is the length of
+            # the array and since array start at index 0, a new item is created
+            failures[${#failures[@]}]="$error"
+            # uncomment if you want to show the error immediately
+            #echo "$error"
+    fi
     else
         mkdir -p $LOGS
         logging
+    fi
+
+    if [ ${#failures[@]} -ne 0 ]; then
+        echo "[FAIL]" 
+        # list every error
+        for failure in "${failures[@]}"
+        do
+            :
+            # optionally color it, format it or whatever you want to do with it
+            echo "error: $failure" > $LOGS"error-$NOW-$NOWT.log"  
+        done
     fi
 }
 
@@ -75,9 +111,7 @@ function st_sync() {
     do
         :
         rsync $OPTION $EXCLUDE $USER@$HOST:$SOURCE ${DESTINATION[$i]}
-        i=$(expr $i + 1)
     done
 }
 
-st_sync
-#logging
+record_error st_sync
