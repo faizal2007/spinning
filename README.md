@@ -1,6 +1,6 @@
 # System Sync Toolkit  
 This script is use to sync web content or directory and data such as Server folder and MySQL Database  
-* [File](#file "Google's Homepage")
+* **[FILE](#file "Google's FILE")**
 
 ## File  
 * www-sync (document root sync)
