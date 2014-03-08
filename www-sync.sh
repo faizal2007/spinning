@@ -17,7 +17,7 @@ OPTION="-azvv --progress --delete -e ssh"
 # ssh authentication 
 #
 USER="user"
-HOST="10.2.0.101"
+HOST="101.2.0.101"
 
 #
 # Server Setting
@@ -43,7 +43,7 @@ EXCLUDE_FILE[0]="configuration.php"
 LOGS="/var/log/www-sync/"
 ## date format ##
 NOW=$(date +"%F")
-NOWT=$(date +"%H%M-%S")
+NOWT=$(date +"%T")
 
 
 ###
@@ -86,14 +86,15 @@ function record_error() {
     fi
 
     if [ ${#failures[@]} -ne 0 ]; then
-        echo "[FAIL]" 
+        echo "[FAIL] -- $NOW $NOWT"  >> $LOGS"error.log"
         # list every error
         for failure in "${failures[@]}"
         do
             :
             # optionally color it, format it or whatever you want to do with it
-            echo "error: $failure" > $LOGS"error-$NOW-$NOWT.log"  
+            echo "error: $failure" >> $LOGS"error.log"  
         done
+        echo "[END]" >> $LOGS"error.log"
     fi
 }
 
