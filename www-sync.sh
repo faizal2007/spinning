@@ -104,8 +104,8 @@ function st_sync() {
             EXCLUDE=$EXCLUDE"--exclude $FILE "
         done 
     fi
-
-    #rsync $OPTION $EXCLUDE $USER@$HOST:$SOURCE $DESTINATION
+    
+    ## Sync multiple source
     i=0
     for SOURCE in "${SOURCE[@]}"
     do
@@ -114,4 +114,5 @@ function st_sync() {
     done
 }
 
+## Starting to sync data
 record_error st_sync
