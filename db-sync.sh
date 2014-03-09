@@ -31,10 +31,10 @@ NOWT=$(date +"%T")
 # 2 - sync all ignore default db mysql,information_schema
 # 3 - sync selected db
 #
-SYNC=1
+SYNC=2
 
 ## Selected DB
-DB="bola tanknkinis"
+DB="supermokh bola"
 
 #
 # Core script
