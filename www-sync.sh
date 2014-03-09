@@ -4,12 +4,6 @@
 # Script to sync Directory
 #
 
-# Redirect file descriptor #3 to standard output (used in recordfailure)
-exec 3>&1
-
-# create an array for holding failures
-declare -a failures
-
 #
 # rsync option
 # Refer man rsync
@@ -21,7 +15,7 @@ OPTION="-azvv --progress --delete -e ssh"
 # ssh authentication 
 #
 USER="user"
-HOST="10.2.0.101"
+HOST="102.2.0.101"
 
 #
 # Server Setting
@@ -61,43 +55,20 @@ NOWT=$(date +"%T")
 #
 
 function record_error() {
-    local error retval
-
+    local error
+    
+    # create folder & redirect error to variable
     if [ -d $LOGS ]; then
-        # Run the command and store error messages (output to the standard error
-        # stream in $error, but send regular output to file descriptor 3 which
-        # redirects to standard output
-        error="$("$@" 2>&1 /dev/null)"
-        retval=$?
-        # if the command failed (returned a non-zero exit code)
-        if [ $retval -gt 0 ]; then
-            if [ -z "$error" ]; then
-                # create an error message if there was none
-                error="Command failed with exit code $retval"
-            fi
-            # uncomment if you want the command in the error message
-            #error="Command $* failed: $error"
-
-            # append the error to $failures, ${#failures[@]} is the length of
-            # the array and since array start at index 0, a new item is created
-            failures[${#failures[@]}]="$error"
-            # uncomment if you want to show the error immediately
-            #echo "$error"
-    fi
+        error="$("$@" 2>&1 1>/dev/null)"
     else
         mkdir -p $LOGS
         record_error "$@"
     fi
-
-    if [ ${#failures[@]} -ne 0 ]; then
-        echo "[FAIL] -- $NOW $NOWT"  >> $LOGS"error.log"
-        # list every error
-        for failure in "${failures[@]}"
-        do
-            :
-            # optionally color it, format it or whatever you want to do with it
-            echo "error: $failure" >> $LOGS"error.log"  
-        done
+    
+   # writing error log
+    if [ "$error" ]; then
+        echo "[FAIL] -- $NOW $NOWT" | tee >> $LOGS"error.log"
+        echo $error | tee >> $LOGS"error.log"
         echo "[END]" >> $LOGS"error.log"
     fi
 }
