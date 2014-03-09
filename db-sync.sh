@@ -17,14 +17,24 @@ CONF_FILE[0]="db-sync.conf"
 CONF_FILE[1]="db-sync-local.conf"
 
 #
+# Log
+#
+LOGS="/var/log/db-sync/"
+## date format ##
+NOW=$(date +"%F")
+NOWT=$(date +"%T")
+
+#
 # DB config
 # 1 - sync all (Make sure default local server password to run mysql-server 
 #     have the same password with source server other mysql-server will failed to run)
 # 2 - sync all ignore default db mysql,information_schema
 # 3 - sync selected db
 #
-
 SYNC=1
+
+## Selected DB
+DB="bola tanknkinis"
 
 #
 # Core script
@@ -39,6 +49,7 @@ SYNC=1
 
 ## Local conf
 [[ -r $CONF_DIR${CONF_FILE[1]} ]] && LCONF=$CONF_DIR${CONF_FILE[1]} || LCONF="./${CONF_FILE[1]}"
+
 
 # Temporary dump staging folder
   TMP=$(mktemp -d -t tmp.XXXXXXXXXX)
@@ -58,6 +69,7 @@ function sync_db() {
 
     # switch to available type
     # only 3 option available
+    
     case "$1" in
             1)
             OPT="--events  --skip-add-locks --databases"
@@ -67,18 +79,40 @@ function sync_db() {
             OPT="--databases"
             DB_LIST=$(mysql --defaults-extra-file=$RCONF -NBe 'SHOW SCHEMAS' | grep -wv 'mysql\|information_schema\|performance_schema')
             ;;
+            3)
+            OPT="--databases"
+            DB_LIST=$DB
+            ;;
             *)
             echo $"Usage : $0 {1|2|3}. Initialize var SYNC with correct value." 
             exit 1
    esac
-   
-   # dump mysql from source to destination server
-   mysqldump --defaults-extra-file=$RCONF $OPT $DB_LIST > "$TMP/db.sql"
-   mysql --defaults-extra-file=$LCONF < "$TMP/db.sql"
-   
-   # fix mysql when all database dump
-   [[ $1 -eq 1 ]] && mysql_upgrade --defaults-extra-file=$LCONF --force 
+
+    # Initiate list of local  db without 'mysql', 'information_schema', 'performance_schema'
+    DBL_LIST=$(mysql --defaults-extra-file=$LCONF -NBe 'SHOW SCHEMAS' | grep -wv 'mysql\|information_schema\|performance_schema')
+    # Drop all local db except mysql to make sure data in source db are the same with  
+    # destination db
+    
+    if [ "$DBL_LIST" ]; then
+        for db in $(echo "$DBL_LIST")
+        do
+        :
+        mysql --defaults-extra-file=$LCONF -e "DROP DATABASE $db"
+        done
+    fi
+
+    # dump mysql from source to destination server
+    mysqldump --defaults-extra-file=$RCONF $OPT $DB_LIST > "$TMP/db.sql"
+    mysql --defaults-extra-file=$LCONF < "$TMP/db.sql"
+
+    # fix mysql privileges when all database dump
+    if [ $1 -eq 1 ]; then
+        mysql_upgrade --defaults-extra-file=$LCONF --force &> "/var/log/mysql-upgrade.log"
+    fi
 }
 
-
 sync_db $SYNC
+
+
+
+
