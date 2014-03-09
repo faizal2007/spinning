@@ -1,5 +1,6 @@
 # System Sync Toolkit  
 This script is use to sync web content or directory and data such as Server folder and MySQL Database  
+This sync are 1 way sync meaning only destination server data change and no changes will made on source server
 * **[File](#file "File")**
 * **[Requirement](#requirement "Requirement")**
 * **[How To](#how-to "How To")**
