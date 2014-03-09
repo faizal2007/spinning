@@ -62,6 +62,21 @@ function finish {
 trap finish EXIT
 
 #
+# @method log error
+#
+function record_error() {
+    if [ -d $LOGS ]; then
+        echo "[FAIL] -- $NOW $NOWT" | tee >> $LOGS"error.log"
+        eval "$@" 2>&1 | tee >> $LOGS"error.log" 
+        echo "[END]" | tee >> $LOGS"error.log"
+    else
+        mkdir -p $LOGS
+        record_error "$@"
+    fi
+}
+
+
+#
 # @method Sync db
 #
 
@@ -111,7 +126,7 @@ function sync_db() {
     fi
 }
 
-sync_db $SYNC
+record_error sync_db $SYNC
 
 
 
