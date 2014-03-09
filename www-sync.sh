@@ -21,7 +21,7 @@ OPTION="-azvv --progress --delete -e ssh"
 # ssh authentication 
 #
 USER="user"
-HOST="101.2.0.101"
+HOST="10.2.0.101"
 
 #
 # Server Setting
@@ -123,6 +123,7 @@ function st_sync() {
     do
         :
         rsync $OPTION $EXCLUDE $USER@$HOST:$SOURCE ${DESTINATION[$i]}
+        i=$[i+1]
     done
 }
 
