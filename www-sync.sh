@@ -67,7 +67,7 @@ function record_error() {
         # Run the command and store error messages (output to the standard error
         # stream in $error, but send regular output to file descriptor 3 which
         # redirects to standard output
-        error="$("$@" 2>&1 &>/dev/null)"
+        error="$("$@" 2>&1 /dev/null)"
         retval=$?
         # if the command failed (returned a non-zero exit code)
         if [ $retval -gt 0 ]; then
