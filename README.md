@@ -1,4 +1,4 @@
---Test--
+-- Test --
 # System Sync Toolkit  
 This script is use to sync web content or directory and data such as Server folder and MySQL Database.  
 This script only sync 1 way meaning that changes only happen on **Destination Server**, **Source Server** will remain the same. 
