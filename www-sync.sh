@@ -4,6 +4,8 @@
 # Script to sync Directory
 #
 
+exec 3>&1
+
 #
 # rsync option
 # Refer man rsync
@@ -58,6 +60,7 @@ function record_error() {
     local error
     
     # create folder & redirect error to variable
+    # replace 1>/dev/null with >&3 to view standard output
     if [ -d $LOGS ]; then
         error="$("$@" 2>&1 1>/dev/null)"
     else
