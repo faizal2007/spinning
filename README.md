@@ -36,7 +36,7 @@ requirement.
 ### db-sync
 
 1. sudo su
-2. git clone https://gist.github.com/9420620.git ./sys-sync or copy script inside www-sync.sh file
+2. git clone https://github.com/wackoen/spinning.git ./sys-sync or copy script inside www-sync.sh file
 3. If using git cd ./sys-sync
 4. Create config file
   * /etc/mysql/db-sync.conf - server config for server where want to sync/download a data (source)
