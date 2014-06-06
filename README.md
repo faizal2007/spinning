@@ -12,7 +12,7 @@ Content or data will follow exactly like **Source Server** If anything deleted a
 
 ## File  
 * www-sync (document root sync)
-* db-sync (db sync) - Still in progress .. 
+* db-sync (db sync)  
 
 ## Requirement 
 * ssh 
@@ -23,7 +23,7 @@ Content or data will follow exactly like **Source Server** If anything deleted a
 ### www-sync
 
 1. sudo su
-2. git clone https://gist.github.com/9420620.git ./sys-sync or copy script inside www-sync.sh file
+2. git clone https://github.com/wackoen/spinning.git ./sys-sync or copy script inside www-sync.sh file
 3. If using git cd ./sys-sync
 4. chmod +x ./www-sync.sh (same for copy script)
 5. ./www-sync.sh
