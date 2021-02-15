@@ -1,4 +1,10 @@
 #!/bin/bash
+#
+# get config variable from file
+#
+Config() {
+    echo `grep ${1} file.conf | grep -v '#'| cut -d '=' -f 2`
+}
 
 #
 # Script to sync Directory
@@ -11,36 +17,37 @@ exec 3>&1
 # Refer man rsync
 #
 
-OPTION="-azvv --progress --delete -e ssh"
+OPTION=`Config OPTION`
 
 #
 # ssh authentication 
 #
-USER="user"
-HOST="102.2.0.101"
+USER=`Config USER`
+HOST=`Config REMOTE`
 
 #
 # Server Setting
 #
 
 ## Production Server
-SOURCE[0]="/var/www/"
-SOURCE[1]="/var/storage/"
+SOURCE=`Config SOURCE`
 
 ## Local Server
-DESTINATION[0]="/home/local/web/"
-DESTINATION[1]="/home/local/lib/"
+DESTINATION=`Config DESTINATION`
 
 ## Exclude File
 ## Split file by <space>
 ## Comment EXCLUDE_FILE to sync all
-EXCLUDE_FILE[0]="configuration.php"
-#EXCLUDE_FILE[1]="smnd/index.php"
+EXCLUDE_FILE=`Config EXCLUDE_FILE`
+
+SOURCE=($SOURCE)
+DESTINATION=($SOURCE)
+EXCLUDE_FILE=($SOURCE)
 
 #
 # Log
 #
-LOGS="/var/log/www-sync/"
+LOGS=`Config LOGS`
 ## date format ##
 NOW=$(date +"%F")
 NOWT=$(date +"%T")
@@ -96,10 +103,12 @@ function st_sync() {
     for SOURCE in "${SOURCE[@]}"
     do
         :
-        rsync $OPTION $EXCLUDE $USER@$HOST:$SOURCE ${DESTINATION[$i]}
+        file=`echo $SOURCE | sed 's/^\///' | sed 's#/$##' | sed 's#/#-#g'`
+        rsync $OPTION $EXCLUDE $USER@$HOST:$SOURCE ${DESTINATION[$i]} | tee $LOGS/$file.log
         i=$[i+1]
     done
 }
 
 ## Starting to sync data
 record_error st_sync
+
