@@ -3,7 +3,7 @@
 # get config variable from file
 #
 Config() {
-    echo `grep ${1} file.conf | grep -v '#'| cut -d '=' -f 2`
+    echo `grep ${1} $(pwd)/conf/file.conf | grep -v '#'| cut -d '=' -f 2`
 }
 
 #
